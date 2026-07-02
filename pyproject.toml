@@ -1,0 +1,59 @@
+[project]
+name = "uploadserver"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = "==3.13.3"
+dependencies = [
+    "aiosqlite>=0.22.1",
+    "fastapi>=0.139.0",
+    "mutagen==1.48.1",
+    "pillow>=12.3.0",
+    "python-dotenv>=1.2.2",
+    "python-multipart>=0.0.32",
+    "tortoise-orm>=1.1.7",
+    "umami-analytics>=1.0.0",
+    "uvicorn[standard]>=0.49.0",
+]
+
+[dependency-groups]
+dev = [
+    "deptry>=0.25.1",
+    "pre-commit==4.6.0",
+    "ruff==0.15.20",
+    "ty==0.0.56",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py313"
+exclude = [
+    ".git",
+    ".hg",
+    ".mypy_cache",
+    ".tox",
+    ".venv",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "models/__init__.py",
+    "bot/api/*",
+    "bot/apis/booru/*",
+    "bot/apis/translate/*",
+    "bot/apis/weather/*"
+]
+
+[tool.ruff.lint]
+ignore = ["E203", "RUF100", "UP047", "B023"]
+select = ["E", "F", "W", "I", "UP", "B", "C4", "ISC", "TID", "RUF", "SIM", "N", "PERF"]
+
+[tool.ruff.format]
+quote-style = "preserve"
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.deptry.per_rule_ignores]
+DEP002 = ["aiosqlite", "python-multipart"]
+DEP003 = ["starlette"]

@@ -1,0 +1,27 @@
+services:
+  upload_server:
+      build: .
+#      image: python:3.13-slim
+      container_name: upload_server
+      restart: unless-stopped
+      working_dir: /app
+#      command:
+#          bash -c "sleep 10000"
+#          bash -c "uv sync && uv run python app.py"
+      volumes:
+          - ./uploads:/app/uploads
+          - ./db:/app/db
+#      ports:
+#          - "8000:8000"
+      networks:
+          - caddy
+
+networks:
+  caddy:
+      external: true
+
+
+volumes:
+  venv_data:
+  uv_cache_data:
+  uv_python:

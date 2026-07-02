@@ -1,0 +1,32 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: check-yaml
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: pretty-format-json
+        args: ['--autofix', '--no-sort-keys', '--indent=4', '--top-keys=comma']
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.14.6
+    hooks:
+      - id: ruff-check
+        args: [--fix]
+      - id: ruff-format
+  - repo: https://github.com/astral-sh/uv-pre-commit
+    rev: 0.9.18
+    hooks:
+      - id: pip-compile
+        name: pip-compile requirements.txt
+        args: [pyproject.toml, -o, requirements.txt ]
+        files: ^pyproject\.toml$
+      - id: pip-compile
+        name: pip-compile requirements-dev.txt
+        args: [--group, dev, -o, requirements-dev.txt]
+        files: ^pyproject\.toml$
+      - id: uv-lock
+  - repo: https://github.com/fpgmaas/deptry.git
+    rev: 0.24.0
+    hooks:
+      - id: deptry
+        args: ["--ignore", "DEP001"]
