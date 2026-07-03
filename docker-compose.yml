@@ -1,6 +1,6 @@
 services:
   upload_server:
-      image: ghcr.io/mrchuw/uploadserver:0.1.0
+      image: ghcr.io/mrchuw/uploadserver:latest
 #      build: .
 #      image: python:3.13-slim
       container_name: upload_server
