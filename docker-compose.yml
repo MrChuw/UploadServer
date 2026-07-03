@@ -1,22 +1,24 @@
 services:
   upload_server:
-      build: .
+      image: ghcr.io/mrchuw/uploadserver:0.1.0
+#      build: .
 #      image: python:3.13-slim
       container_name: upload_server
       restart: unless-stopped
       working_dir: /app
       environment:
         # DATABASE_URL=sqlite://db.sqlite3
-        - UMAMI_URL_BASE=${UMAMI_URL_BASE:-}
-        - UMAMI_WEBSITE_ID=${UMAMI_WEBSITE_ID:-}
-        - UMAMI_HOSTNAME=${UMAMI_HOSTNAME:-}
+        - FORWARDED_PROTO=${FORWARDED_PROTO:-}
         - UPLOAD_DIR=${UPLOAD_DIR:-../uploads}
         - TRASH_DIR=${TRASH_DIR:-../uploads/.trash}
         - DEFAULT_MAX_UPLOAD_SIZE=${DEFAULT_MAX_UPLOAD_SIZE:-104857600}
         - INITIAL_TOKEN_LENGTH=${INITIAL_TOKEN_LENGTH:-5}
         - RESERVED_NAMES=${RESERVED_NAMES:-api,static,assets,metrics,admin}
+        - UMAMI_URL_BASE=${UMAMI_URL_BASE:-}
+        - UMAMI_WEBSITE_ID=${UMAMI_WEBSITE_ID:-}
+        - UMAMI_HOSTNAME=${UMAMI_HOSTNAME:-}
       volumes:
-          - ./uploads:/app/uploads
+          - ${PWD}/uploads:/app/uploads
           - ./db:/app/db
 #      ports:
 #          - "8000:8000"

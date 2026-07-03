@@ -17,6 +17,7 @@ from tortoise.functions import Avg, Count, Max, Min, Sum
 from uploadserver.models import APIKey, DeletedFileLog, UploadedFile, UserRole
 from uploadserver.utils import (
     DATABASE_URL,
+    FORWARDED_PROTO,
     UMAMI_HOSTNAME,
     UMAMI_URL_BASE,
     UMAMI_WEBSITE_ID,
@@ -78,7 +79,7 @@ async def upload_file(
 ) -> dict[str, str]:  # noqa: B008
     subfolder = sanitize_subfolder_name(name)
     provided_tags = tags or []
-    forwarded_proto = request.headers.get("x-forwarded-proto", request.url.scheme)
+    forwarded_proto = FORWARDED_PROTO or request.headers.get("x-forwarded-proto", request.url.scheme)
     base_url_string = f"{forwarded_proto}://{request.url.netloc}/"
     return await process_and_save_upload(
         file=file,
@@ -105,7 +106,7 @@ async def upload_file_doxx(
     subfolder = sanitize_subfolder_name(name)
     provided_tags = tags or []
 
-    forwarded_proto = request.headers.get("x-forwarded-proto", request.url.scheme)
+    forwarded_proto = FORWARDED_PROTO or request.headers.get("x-forwarded-proto", request.url.scheme)
     base_url_string = f"{forwarded_proto}://{request.url.netloc}/"
 
     return await process_and_save_upload(
@@ -421,7 +422,7 @@ async def generate_sharex_config(
     request: Request,
     current_user: APIKey = Depends(verify_api_key),  # noqa: B008
 ) -> dict[str, Any]:
-    forwarded_proto = request.headers.get("x-forwarded-proto", request.url.scheme)
+    forwarded_proto = FORWARDED_PROTO or request.headers.get("x-forwarded-proto", request.url.scheme)
     base_url_string = f"{forwarded_proto}://{request.url.netloc}"
 
     config_payload = {

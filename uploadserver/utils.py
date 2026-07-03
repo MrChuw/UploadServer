@@ -27,6 +27,9 @@ from uploadserver.models import APIKey, DeletedFileLog, Tag, UploadedFile, UserR
 
 load_dotenv()
 
+
+FORWARDED_PROTO = os.getenv("MAX_NAME_FORWAEDED_PROTOLENGTH", None)
+
 BASE_DIR = Path(__file__).resolve().parent
 
 DATABASE_URL = os.getenv("DATABASE_URL", f"sqlite:///{BASE_DIR.parent}/db/db.sqlite3")
