@@ -28,7 +28,7 @@ from uploadserver.models import APIKey, DeletedFileLog, Tag, UploadedFile, UserR
 load_dotenv()
 
 
-FORWARDED_PROTO = os.getenv("MAX_NAME_FORWAEDED_PROTOLENGTH", None)
+FORWARDED_PROTO = os.getenv("FORWARDED_PROTO", None)
 
 BASE_DIR = Path(__file__).resolve().parent
 
