@@ -407,7 +407,7 @@ async def serve_file_fallback_router(
     generated_etag = f'"{int(stat_result.st_mtime)}-{stat_result.st_size}"'
 
     shared_headers = {
-        "Cache-Control": "public, max-age=2592000, immutable",
+        "Cache-Control": "public, max-age=300, immutable",
         "ETag": generated_etag,
     }
     if x_handled_by == "Caddy":
